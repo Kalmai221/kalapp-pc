@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const electronInstaller = require('electron-winstaller');
 
 function createWindow () {
   // Create the browser window.
@@ -17,6 +18,18 @@ function createWindow () {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+}
+
+try {
+  await electronInstaller.createWindowsInstaller({
+    appDirectory: '/tmp/build/my-app-64',
+    outputDirectory: '/tmp/build/installer64',
+    authors: 'My App Inc.',
+    exe: 'myapp.exe'
+  });
+  console.log('It worked!');
+} catch (e) {
+  console.log(`No dice: ${e.message}`);
 }
 
 // This method will be called when Electron has finished
